@@ -8,8 +8,12 @@
 
 import UIKit
 import MapKit
-
+var Names: [String] = []
+var labels: [String] = []
+var text: [String] = []
 class ViewController: UIViewController, MKMapViewDelegate {
+    var LatCorrdinate: String = ""
+    var LongCoordinate: String = ""
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,15 +23,17 @@ class ViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //Very important
         mapView.delegate = self
         
         let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         longPressRecogniser.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(longPressRecogniser)
-        
         mapView.mapType = MKMapType.standard
         
         let location = CLLocationCoordinate2D(latitude: CLLocationDegrees(keyLat), longitude: CLLocationDegrees(keyLon))
+        
+        
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
@@ -38,6 +44,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         annotation.subtitle = "Irving"
         
         mapView.addAnnotation(annotation)
+        
     }
     
     @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer){
@@ -47,33 +54,52 @@ class ViewController: UIViewController, MKMapViewDelegate {
         //Adding annotation
         let annotation = MKPointAnnotation()
         annotation.coordinate = coodinate
-        annotation.title = "latitude: " + String(format: "%0.02f", annotation.coordinate.latitude) + " longitude: " + String(format: "%0.02f", annotation.coordinate.longitude)
-        print(coodinate)
         mapView.addAnnotation(annotation)
-        
+        let alert = UIAlertController(title: "Some Title", message: "Enter a text", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.text = "  "
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            let addingText = (textField!.text)!
+            text.append(addingText)
+            print(text)
+            print("Text field: \(textField!.text)")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    //help to get the exact corrinate
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let latValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.latitude)!))
         let lonValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.longitude)!))
         print("Latitude:\(latValStr) & longitude\(lonValStr)")
-        
-        let geoLattitude = Double(latValStr)
-        let geoLongitude = Double(lonValStr)
-        
-        //This will help to get location name using coordinates
-//        let geocoder = CLGeocoder()
-//        let location = CLLocation(latitude: geoLattitude!, longitude: geoLongitude!)
-//        geocoder.reverseGeocodeLocation(location) {
-//            (placemarks, error) -> Void in
-//            if let placemarks = placemarks, placemarks.count > 0 {
-//                let placemark = placemarks[0]
-//                print(placemark.addressDictionary!)
-//            }
-//        }
-        
-        
-        
+        Names.append(latValStr)
+        labels.append(lonValStr)
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        print(LatCorrdinate)
+        print(LongCoordinate)
+        let myDouble = Double(LatCorrdinate)
+        let myDoubles = Double(LongCoordinate)
+        if myDouble == nil && myDoubles == nil{
+            print("Nil")
+        }else{
+            let latitude: CLLocationDegrees = myDouble!
+            let longitude: CLLocationDegrees = myDoubles!
+            let latDelta: CLLocationDegrees = 0.05
+            let LongDelata:CLLocationDegrees = 0.05
+            let coordiantes = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: LongDelata)
+            let regions = MKCoordinateRegion(center: coordiantes, span: span)
+            mapView.setRegion(regions, animated: true)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordiantes
+            annotation.title = "Found!"
+            mapView.addAnnotation(annotation)
+        }
+    }
 }
