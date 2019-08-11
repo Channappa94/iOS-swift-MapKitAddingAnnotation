@@ -54,6 +54,19 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coodinate
         mapView.addAnnotation(annotation)
+        
+        let alert = UIAlertController(title: "Some Title", message: "Enter a text", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.text = "  "
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            let addingText = (textField!.text)!
+            text.append(addingText)
+            print(text)
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     
@@ -70,20 +83,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         //print("Latitude:\(latValStr) & longitude\(lonValStr)"
         Names.append(latValStr)
         labels.append(lonValStr)
-        let alert = UIAlertController(title: "Some Title", message: "Enter a text", preferredStyle: .alert)
-        alert.addTextField { (textField) in
-            textField.text = "  "
-        }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0]
-            let addingText = (textField!.text)!
-            text.append(addingText)
-            
-        }))
-        self.present(alert, animated: true, completion: nil)
-        
         self.save(itemTosave: text, lati: Names, longi: labels)
-        fetchingData()
     }
     
     
@@ -110,6 +110,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotation.title = "Found!"
             mapView.addAnnotation(annotation)
         }
+        fetchingData()
     }
     
     
@@ -155,16 +156,18 @@ class ViewController: UIViewController, MKMapViewDelegate {
             savingdata = try managedContext.fetch(fetchRequest)
             for saving in savingdata{
                 datas = (saving.value(forKeyPath: "names") as? [String])!
-                Corelat = (saving.value(forKeyPath: "latt") as? [String])!
-                Corelon = (saving.value(forKeyPath: "longg") as? [String])!
+                    Corelat = (saving.value(forKeyPath: "latt") as? [String])!
+                    Corelon = (saving.value(forKeyPath: "longg") as? [String])!
+                
+                
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        print(datas)
+//        print(datas)
         print(Corelat)
         print(Corelon)
-        
+//
         
     }
 }

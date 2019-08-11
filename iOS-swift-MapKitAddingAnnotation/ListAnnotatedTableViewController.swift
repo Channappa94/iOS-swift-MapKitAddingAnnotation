@@ -30,7 +30,6 @@ class ListAnnotatedTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        print(datas)
         cell.textLabel?.text = datas[indexPath.row]
         return cell
     }
