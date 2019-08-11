@@ -8,9 +8,16 @@
 
 import UIKit
 import MapKit
+import CoreData
+
 var Names: [String] = []
 var labels: [String] = []
 var text: [String] = []
+var datas: [String] = []
+var Corelat: [String] = []
+var Corelon: [String] = []
+
+var savingdata: [NSManagedObject] = []
 class ViewController: UIViewController, MKMapViewDelegate {
     var LatCorrdinate: String = ""
     var LongCoordinate: String = ""
@@ -22,8 +29,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     var selectedAnnotation: MKPointAnnotation?
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //Very important
+        
         mapView.delegate = self
         
         let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -33,28 +39,37 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         let location = CLLocationCoordinate2D(latitude: CLLocationDegrees(keyLat), longitude: CLLocationDegrees(keyLon))
         
-        
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        annotation.title = "United States"
-        annotation.subtitle = "Irving"
-        
-        mapView.addAnnotation(annotation)
         
     }
     
     @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer){
         let location = gestureReconizer.location(in: mapView)
         let coodinate = mapView.convert(location, toCoordinateFrom: mapView)
+        // self.save(itemTosave: text, lati: Names, longi: labels)
         
         //Adding annotation
         let annotation = MKPointAnnotation()
         annotation.coordinate = coodinate
         mapView.addAnnotation(annotation)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    //help to get the exact corrinate
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let latValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.latitude)!))
+        let lonValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.longitude)!))
+        //print("Latitude:\(latValStr) & longitude\(lonValStr)"
+        Names.append(latValStr)
+        labels.append(lonValStr)
         let alert = UIAlertController(title: "Some Title", message: "Enter a text", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.text = "  "
@@ -63,25 +78,19 @@ class ViewController: UIViewController, MKMapViewDelegate {
             let textField = alert?.textFields![0]
             let addingText = (textField!.text)!
             text.append(addingText)
-            print(text)
-            print("Text field: \(textField!.text)")
+            
         }))
         self.present(alert, animated: true, completion: nil)
+        
+        self.save(itemTosave: text, lati: Names, longi: labels)
+        fetchingData()
     }
     
     
-    //help to get the exact corrinate
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let latValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.latitude)!))
-        let lonValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.longitude)!))
-        print("Latitude:\(latValStr) & longitude\(lonValStr)")
-        Names.append(latValStr)
-        labels.append(lonValStr)
-    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
-        print(LatCorrdinate)
-        print(LongCoordinate)
         let myDouble = Double(LatCorrdinate)
         let myDoubles = Double(LongCoordinate)
         if myDouble == nil && myDoubles == nil{
@@ -101,5 +110,61 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotation.title = "Found!"
             mapView.addAnnotation(annotation)
         }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func save(itemTosave: [String], lati: [String], longi: [String]) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Place",
+                                                in: managedContext)!
+        let person = NSManagedObject(entity: entity,
+                                     insertInto: managedContext)
+        person.setValue(itemTosave, forKeyPath: "names")
+        person.setValue(lati, forKeyPath: "latt")
+        person.setValue(longi, forKeyPath: "longg")
+        
+        do {
+            try managedContext.save()
+            savingdata.append(person)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    
+    
+    
+    
+    func fetchingData(){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        //Grabbing the xcode data model
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Place")
+        do {
+            savingdata = try managedContext.fetch(fetchRequest)
+            for saving in savingdata{
+                datas = (saving.value(forKeyPath: "names") as? [String])!
+                Corelat = (saving.value(forKeyPath: "latt") as? [String])!
+                Corelon = (saving.value(forKeyPath: "longg") as? [String])!
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        print(datas)
+        print(Corelat)
+        print(Corelon)
+        
+        
     }
 }

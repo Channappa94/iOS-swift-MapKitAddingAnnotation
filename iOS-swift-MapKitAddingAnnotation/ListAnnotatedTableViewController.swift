@@ -7,15 +7,12 @@
 //
 
 import UIKit
-
-
+import CoreData
 class ListAnnotatedTableViewController: UITableViewController {
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     // MARK: - Table view data source
@@ -27,13 +24,14 @@ class ListAnnotatedTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return text.count
+        return datas.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = text[indexPath.row]
+        print(datas)
+        cell.textLabel?.text = datas[indexPath.row]
         return cell
     }
     
@@ -52,7 +50,6 @@ class ListAnnotatedTableViewController: UITableViewController {
         }
         
     }
-    
     
     
 }
