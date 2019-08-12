@@ -9,10 +9,10 @@
 import UIKit
 import CoreData
 class ListAnnotatedTableViewController: UITableViewController {
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     // MARK: - Table view data source
@@ -43,12 +43,19 @@ class ListAnnotatedTableViewController: UITableViewController {
             let controller = segue.destination as? ViewController
             
             let blogIndex = tableView.indexPathForSelectedRow?.row
-            controller!.LatCorrdinate = Names[blogIndex!]
-            controller?.LongCoordinate = labels[blogIndex!]
+            controller!.LatCorrdinate = Corelat[blogIndex!]
+            controller?.LongCoordinate = Corelon[blogIndex!]
             
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
     
     
 }

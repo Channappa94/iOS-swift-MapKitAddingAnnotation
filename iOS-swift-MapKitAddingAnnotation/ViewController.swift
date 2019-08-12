@@ -42,19 +42,15 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
-        
+        fetchingData()
     }
+    
+    
     
     @objc func handleTap(_ gestureReconizer: UILongPressGestureRecognizer){
         let location = gestureReconizer.location(in: mapView)
         let coodinate = mapView.convert(location, toCoordinateFrom: mapView)
         // self.save(itemTosave: text, lati: Names, longi: labels)
-        
-        //Adding annotation
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coodinate
-        mapView.addAnnotation(annotation)
-        
         let alert = UIAlertController(title: "Some Title", message: "Enter a text", preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.text = "  "
@@ -62,33 +58,27 @@ class ViewController: UIViewController, MKMapViewDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
             let addingText = (textField!.text)!
-            text.append(addingText)
-            print(text)
+            datas.append(addingText)
             
         }))
         self.present(alert, animated: true, completion: nil)
+        
+        //Adding annotation
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coodinate
+        mapView.addAnnotation(annotation)
     }
-    
-    
-    
-    
-    
-    
-    
     
     //help to get the exact corrinate
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let latValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.latitude)!))
         let lonValStr : String = String(format: "%0.02f", Float((view.annotation?.coordinate.longitude)!))
         //print("Latitude:\(latValStr) & longitude\(lonValStr)"
-        Names.append(latValStr)
-        labels.append(lonValStr)
-        self.save(itemTosave: text, lati: Names, longi: labels)
+        Corelat.append(latValStr)
+        Corelon.append(lonValStr)
+        self.save(itemTosave: datas, lati:Corelat , longi: Corelon)
+        
     }
-    
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         let myDouble = Double(LatCorrdinate)
@@ -110,15 +100,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotation.title = "Found!"
             mapView.addAnnotation(annotation)
         }
-        fetchingData()
     }
-    
-    
-    
-    
-    
-    
-    
     
     func save(itemTosave: [String], lati: [String], longi: [String]) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -136,12 +118,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
         do {
             try managedContext.save()
             savingdata.append(person)
+            print(savingdata)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
-    
     
     
     
@@ -156,18 +137,18 @@ class ViewController: UIViewController, MKMapViewDelegate {
             savingdata = try managedContext.fetch(fetchRequest)
             for saving in savingdata{
                 datas = (saving.value(forKeyPath: "names") as? [String])!
-                    Corelat = (saving.value(forKeyPath: "latt") as? [String])!
-                    Corelon = (saving.value(forKeyPath: "longg") as? [String])!
-                
-                
+                Corelat = (saving.value(forKeyPath: "latt") as? [String])!
+                Corelon = (saving.value(forKeyPath: "longg") as? [String])!
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-//        print(datas)
-        print(Corelat)
-        print(Corelon)
-//
-        
     }
+    
+    @IBAction func buttonTapped(_ sender: Any) {
+        fetchingData()
+    }
+    
+    
+    
 }
