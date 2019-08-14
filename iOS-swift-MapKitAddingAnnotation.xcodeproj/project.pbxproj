@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490E15DC2301F2C500900A03 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490E15DB2301F2C500900A03 /* CoreLocation.framework */; };
 		49C910C422FF580800B8FCB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C910C322FF580800B8FCB6 /* AppDelegate.swift */; };
 		49C910C622FF580800B8FCB6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C910C522FF580800B8FCB6 /* ViewController.swift */; };
 		49C910C922FF580800B8FCB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C910C722FF580800B8FCB6 /* Main.storyboard */; };
 		49C910CC22FF580800B8FCB6 /* iOS_swift_MapKitAddingAnnotation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49C910CA22FF580800B8FCB6 /* iOS_swift_MapKitAddingAnnotation.xcdatamodeld */; };
 		49C910CE22FF580900B8FCB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49C910CD22FF580900B8FCB6 /* Assets.xcassets */; };
 		49C910D122FF580900B8FCB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C910CF22FF580900B8FCB6 /* LaunchScreen.storyboard */; };
+		49C910D922FF8F9E00B8FCB6 /* ListAnnotatedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C910D822FF8F9E00B8FCB6 /* ListAnnotatedTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		490E15DB2301F2C500900A03 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		49C910C022FF580800B8FCB6 /* iOS-swift-MapKitAddingAnnotation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-swift-MapKitAddingAnnotation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C910C322FF580800B8FCB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49C910C522FF580800B8FCB6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		49C910CD22FF580900B8FCB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49C910D022FF580900B8FCB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49C910D222FF580900B8FCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49C910D822FF8F9E00B8FCB6 /* ListAnnotatedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAnnotatedTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				490E15DC2301F2C500900A03 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		490E15DA2301F2C500900A03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				490E15DB2301F2C500900A03 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		49C910B722FF580800B8FCB6 = {
 			isa = PBXGroup;
 			children = (
 				49C910C222FF580800B8FCB6 /* iOS-swift-MapKitAddingAnnotation */,
 				49C910C122FF580800B8FCB6 /* Products */,
+				490E15DA2301F2C500900A03 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +72,7 @@
 			children = (
 				49C910C322FF580800B8FCB6 /* AppDelegate.swift */,
 				49C910C522FF580800B8FCB6 /* ViewController.swift */,
+				49C910D822FF8F9E00B8FCB6 /* ListAnnotatedTableViewController.swift */,
 				49C910C722FF580800B8FCB6 /* Main.storyboard */,
 				49C910CD22FF580900B8FCB6 /* Assets.xcassets */,
 				49C910CF22FF580900B8FCB6 /* LaunchScreen.storyboard */,
@@ -140,6 +155,7 @@
 			files = (
 				49C910C622FF580800B8FCB6 /* ViewController.swift in Sources */,
 				49C910C422FF580800B8FCB6 /* AppDelegate.swift in Sources */,
+				49C910D922FF8F9E00B8FCB6 /* ListAnnotatedTableViewController.swift in Sources */,
 				49C910CC22FF580800B8FCB6 /* iOS_swift_MapKitAddingAnnotation.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
