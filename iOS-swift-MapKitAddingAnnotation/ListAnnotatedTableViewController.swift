@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 class ListAnnotatedTableViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +27,6 @@ class ListAnnotatedTableViewController: UITableViewController {
         return datas.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = datas[indexPath.row]
@@ -43,19 +42,8 @@ class ListAnnotatedTableViewController: UITableViewController {
             let controller = segue.destination as? ViewController
             
             let blogIndex = tableView.indexPathForSelectedRow?.row
-            controller!.LatCorrdinate = Corelat[blogIndex!]
+            controller?.LatCorrdinate = Corelat[blogIndex!]
             controller?.LongCoordinate = Corelon[blogIndex!]
-            
         }
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

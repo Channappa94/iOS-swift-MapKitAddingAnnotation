@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490E15DC2301F2C500900A03 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490E15DB2301F2C500900A03 /* CoreLocation.framework */; };
 		49C910C422FF580800B8FCB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C910C322FF580800B8FCB6 /* AppDelegate.swift */; };
 		49C910C622FF580800B8FCB6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C910C522FF580800B8FCB6 /* ViewController.swift */; };
 		49C910C922FF580800B8FCB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C910C722FF580800B8FCB6 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		490E15DB2301F2C500900A03 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		49C910C022FF580800B8FCB6 /* iOS-swift-MapKitAddingAnnotation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-swift-MapKitAddingAnnotation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C910C322FF580800B8FCB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49C910C522FF580800B8FCB6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -33,17 +35,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				490E15DC2301F2C500900A03 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		490E15DA2301F2C500900A03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				490E15DB2301F2C500900A03 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		49C910B722FF580800B8FCB6 = {
 			isa = PBXGroup;
 			children = (
 				49C910C222FF580800B8FCB6 /* iOS-swift-MapKitAddingAnnotation */,
 				49C910C122FF580800B8FCB6 /* Products */,
+				490E15DA2301F2C500900A03 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

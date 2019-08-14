@@ -12,13 +12,12 @@ import CoreData
 
 var Names: [String] = []
 var labels: [String] = []
-var text: [String] = []
 var datas: [String] = []
 var Corelat: [String] = []
 var Corelon: [String] = []
 
 var savingdata: [NSManagedObject] = []
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var LatCorrdinate: String = ""
     var LongCoordinate: String = ""
     
@@ -56,9 +55,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
             textField.text = "  "
         }
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0]
-            let addingText = (textField!.text)!
-            datas.append(addingText)
+            let textField = alert?.textFields?[0]
+            let addingText = (textField!.text)
+            datas.append(addingText!)
             
         }))
         self.present(alert, animated: true, completion: nil)
@@ -77,7 +76,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         Corelat.append(latValStr)
         Corelon.append(lonValStr)
         self.save(itemTosave: datas, lati:Corelat , longi: Corelon)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,7 +95,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordiantes
-            annotation.title = "Found!"
+            annotation.title = "Found"
             mapView.addAnnotation(annotation)
         }
     }
@@ -108,8 +106,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Place",
-                                                in: managedContext)!
-        let person = NSManagedObject(entity: entity,
+                                                in: managedContext)
+        let person = NSManagedObject(entity: entity!,
                                      insertInto: managedContext)
         person.setValue(itemTosave, forKeyPath: "names")
         person.setValue(lati, forKeyPath: "latt")
@@ -123,8 +121,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-    
-    
     
     func fetchingData(){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -148,7 +144,4 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @IBAction func buttonTapped(_ sender: Any) {
         fetchingData()
     }
-    
-    
-    
 }
